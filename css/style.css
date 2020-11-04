@@ -1,0 +1,83 @@
+body{
+  background-color: #e7e8e7;
+}
+ 
+ /* #head{
+     
+ } */
+ 
+ #title{
+     text-align: center;
+ }
+ #description{
+     text-align: center;
+     font-family: 'Baloo Da 2', cursive;
+     font-size: 20px;
+     font-style: italic;
+ }
+ 
+ #main{
+     /* background-color: #288671; */
+     border-radius: 20px;
+     justify-self: center;
+ }
+
+ /* .main{
+     height: 100;
+ } */
+ .jumbotron-image {
+    background-image: url("../images/transparent.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+  }  
+
+  .welcome{
+      font-size: 5rem;
+      margin-top: 6rem;
+  }
+
+ .thin{
+    border: 0.5px grey solid;
+    border-radius: 5px;
+}
+ 
+ #survey-form{
+     /* background-color: ; */
+     padding: 1em;
+     font-family: tahoma;
+ }
+
+nav .nav-item{
+    margin-right: 3rem;
+}
+
+footer{
+    background-color: dimgrey;
+    color: black;
+    text-align: center;
+}
+
+footer ul{
+    margin: auto;
+}
+
+footer .nav-link{
+    text-decoration: none;
+    color: white !important;
+}
+
+
+
+@media(max-width:500px){
+.jumbotron-info a{
+  margin-bottom: 10px;
+  display: block;
+}
+
+.welcome{
+    font-size: 2rem;
+}
+
+}
