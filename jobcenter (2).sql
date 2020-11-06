@@ -22,17 +22,11 @@ CREATE TABLE `users` (
   `register_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 )
 
-CREATE TABLE `jobs` (
+CREATE TABLE `reset` (
   `id` int(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `company` varchar(255) NOT NULL,
-  `industry` varchar(255) NOT NULL,
-  `body` text NOT NULL,
-  `location` varchar(255) NOT NULL,
-  `image` varchar(255) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) 
+  `email` varchar(255) NOT NULL,
+  `token` varchar(255) NOT NULL UNIQUE,
+)
 
 CREATE TABLE `companies` (
   `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -49,6 +43,19 @@ CREATE TABLE `companies` (
   )  
 
 
+CREATE TABLE `jobs` (
+  `id` int(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `company` varchar(255) NOT NULL,
+  `industry` varchar(255) NOT NULL,
+  `body` text NOT NULL,
+  `location` varchar(255) NOT NULL,
+  `image` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) 
+
+
 ALTER TABLE `applicants` ADD `payment` varchar(100) NOT NULL  AFTER `district`;
 
 ALTER TABLE `applicants` ADD `job_title` varchar(100) NOT NULL  AFTER `payment`;
@@ -57,7 +64,8 @@ ALTER TABLE `applicants` ADD `statusRadios` varchar(100) NOT NULL  AFTER `job_ti
 
 ALTER TABLE `applicants` ADD `company` varchar(100) NOT NULL  AFTER `statusRadios`;
 
-ALTER TABLE `jobs` ADD `company` varchar(255) NOT NULL  AFTER `title`;
+ALTER TABLE `users` ADD `level` varchar(255) NOT NULL  AFTER `password`;
+
 users
 name
 contact

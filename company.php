@@ -110,7 +110,7 @@ if( !$_SESSION['email'] ){
                 <div class="text-center img-placeholder"  onClick="triggerClick()">
                     <h4>Upload image</h4>
                 </div>
-                <img src="companies/avatar.jpg" onClick="triggerClick()" class="card-img-top" alt=""  id="imageUpdate">
+                <img src="images/avatar.jpg" onClick="triggerClick()" class="card-img-top" alt=""  id="imageUpdate">
                 </span>
                 <input type="file" name="image" onChange="updatedImage(this)" id="image" class="form-control" style="display: none;">
                 <label>Upload Image</label>

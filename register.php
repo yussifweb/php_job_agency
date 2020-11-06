@@ -38,18 +38,18 @@
                             <input type="email" class="form-control" id="email" name="email" placeholder="Please Enter Your Email" required>
                         </div>
                         <div class="form-group">
-                            <label for="name" id="name-label">Password</label>
-                            <input type="password" id="name" class="form-control"name="password" placeholder="Password" required>
+                            <label for="password" id="password-label">Password</label>
+                            <input type="password" id="password" class="form-control" name="password" placeholder="Password" required>
                         </div>
-                        <!-- <div class="form-group">
-                            <label for="text" id="email-label">Re-enter Password</label>
-                            <input type="email" class="form-control" id="email" placeholder="Re-enter Password" required>
+                        <div class="form-group">
+                            <label for="password" id="password-label">Re-enter Password</label>
+                            <input type="password" class="form-control"name="password_2" id="password_2" placeholder="Re-enter Password" required>
                         </div>
-                            <div class="checkbox mb-3">
+                            <!-- <div class="checkbox mb-3">
                           <label>
                             <input type="checkbox" value="remember-me"> Remember me
-                          </label>
-                        </div> -->
+                          </label> -->
+                        </div>
                         <button class="btn btn-lg btn-primary btn-block" name="submit" type="submit">Sign Up</button>
                       </form>              
                 
@@ -64,22 +64,64 @@
         </main>
     <?php 
     
+
+
     if( isset( $_POST['submit'] ) ){
-        $name = $_POST['name'];
-        $contact = $_POST['contact'];
-        $email = $_POST['email'];
+      // receive all input values from the form
+      $name = mysqli_real_escape_string($connect, $_POST['name']);
+      $contact = mysqli_real_escape_string($connect, $_POST['contact']);
+      $email = mysqli_real_escape_string($connect, $_POST['email']);
+      $password = mysqli_real_escape_string($connect, $_POST['password']);
+      $password_2 = mysqli_real_escape_string($connect, $_POST['password_2']);
+      if ($password != $password_2) {
+            $error = 'password not match';              
+            $msg = "Passwords do not match";
+            $msg_class = "alert-danger";
+        }
+      
+        // first check the database to make sure 
+        // a user does not already exist with the same username and/or email
+        $sql = "SELECT * FROM users WHERE name='$name' OR email='$email' LIMIT 1";
+        $result = mysqli_query($connect, $sql);
+        $user = mysqli_fetch_assoc($result);
+        
+        if ($user) { // if user exists
+          if ($user['name'] === $name) {
+            $error = 'name exists';              
+            $msg = "Name already exists";
+            $msg_class = "alert-danger";
+          }
+      
+          if ($user['email'] === $email) {
+            $error = 'email exists';              
+            $msg = "Email already exists";
+            $msg_class = "alert-danger";
+          }
+        }
+        
+        if (empty($error)) {
+        // $name = $_POST['name'];
+        // $contact = $_POST['contact'];
+        // $email = $_POST['email'];
         $password = md5($_POST['password']);
         $level = 50;
         $sql = "INSERT INTO users (name, contact, email, password, level) VALUES ( '$name', $contact, '$email', '$password', '$level' )";
-
         if (mysqli_query($connect, $sql)) {
           header( 'Location: index.php' );
         } else {
             echo "Error: " . $sql . "<br>" . mysqli_error($connect);
         }
+      }
     }
     
     ?>
+
+  <?php if (!empty($msg)): ?>
+    <div class="alert <?php echo $msg_class ?>" role="alert">
+    <?php echo $msg; ?>
+    </div>
+    <?php endif; ?>
+
 
 
     <!-- Optional JavaScript; choose one of the two! -->
