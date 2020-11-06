@@ -41,7 +41,7 @@ if( !$_SESSION['email'] ){
     while ($applicant = mysqli_fetch_assoc($result)) {
     ?>
     <div class="col-12 col-sm-4 mb-5">
-  <div class="card" style="width: 18rem;">
+  <div class="card">
   <div class="card-header text-center"><?php echo $applicant['name']; ?></div>
   <img src="applicants/<?php echo $applicant['image']; ?>" class="card-img-top" alt="<?php echo $company['name']; ?>">
     <div class="card-body">
@@ -49,9 +49,9 @@ if( !$_SESSION['email'] ){
       <p class="card-text text-center"><?php echo $applicant['email']; ?></p>
     </div>
     <div class="card-footer">
-      <a href="applicant_details.php?id=<?php echo $applicant['id']; ?>" class="btn btn-primary btn-sm">Details</a>
-      <a href="applicant_edit.php?id=<?php echo $applicant['id']; ?>" class="btn btn-info btn-sm">Update</a>
-      <a href="applicant_delete.php?id=<?php echo $applicant['id']; ?>" class="btn btn-danger btn-sm">Delete</a>
+      <span><a href="applicant_details.php?id=<?php echo $applicant['id']; ?>" class="btn btn-primary btn-sm">Details</a></span>
+      <span><a href="applicant_edit.php?id=<?php echo $applicant['id']; ?>" class="btn btn-info btn-sm">Update</a></span>
+      <span><a href="applicant_delete.php?id=<?php echo $applicant['id']; ?>" class="btn btn-danger btn-sm">Delete</a></span>
     </div>
     </div>
     </div>
@@ -62,17 +62,6 @@ if( !$_SESSION['email'] ){
       echo '0 Results';
   }
   ?>
-
-  <!-- get number of applicants -->
-<?php
-$sql="SELECT COUNT('name') FROM applicants";
-
-$result=mysqli_query($connect,$sql);
-$row=mysqli_fetch_array($result);
-echo "$row[0]";
-mysqli_close($connect);
-?>
-<!-- get number of applicants -->
 
   </div>
 <div class="row">

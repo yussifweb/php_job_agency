@@ -32,7 +32,7 @@ if( !$_SESSION['email'] ){
               <h1 class="welcome">Welcome To Job Center</h1>
               <p class="lead">Get started here......</p>
               <hr class="my-4">
-              <a class="btn btn-primary btn-lg" href="#" role="button">Check Status</a>
+              <a class="btn btn-primary btn-lg" href="status.php" role="button">Check Report</a>
               <a class="btn btn-primary btn-lg" href="company.php" role="button">Add Company</a>
               <a class="btn btn-primary btn-lg" href="applicant.php" role="button">Add Applicant</a>  
             </div>

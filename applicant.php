@@ -127,9 +127,74 @@ if( !$_SESSION['email'] ){
             <?php
              } }
             ?> 
-          <div class="form-group">
-              <input type="file" class="form-control input-sm" name="image" required placeholder="Upload Image">
-          </div>
+
+            <div class="form-group">
+                <label for="payment-level">Payment</label>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="paymentRadios" id="paymentRadios1"
+                      value="Pending" checked>
+                  <label class="form-check-label" for="paymentRadios1">
+                      Pending
+                  </label>
+              </div>
+              <div class="form-check">
+                  <input class="form-check-input" type="radio" name="paymentRadios" id="paymentRadios2"
+                      value="Paid">
+                  <label class="form-check-label" for="paymentRadios2">
+                      Paid
+                  </label>
+              </div>
+              </div>
+
+              <div class="form-group">
+                <label for="job_title" id="job_title-label">Job Title</label>
+                <input type="text" id="job_title" class="form-control" name="job_title" placeholder="Please Enter Job Title" required>
+            </div>
+
+            <div class="form-group">
+                <label for="status">Post Status</label>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="statusRadios" id="statusRadios1"
+                      value="Pending" checked>
+                  <label class="form-check-label" for="statusRadios1">
+                      Pending
+                  </label>
+              </div>
+              <div class="form-check">
+                  <input class="form-check-input" type="radio" name="statusRadios" id="statusRadios2"
+                      value="Posted">
+                  <label class="form-check-label" for="statusRadios2">
+                      Posted
+                  </label>
+              </div>
+              </div>
+
+              <div class="form-group">
+                <label for="company">Company</label>
+                <select class="form-control" id="dropdown" name="company">
+                <option selected>Select</option>
+                <?php 
+                $sql = "SELECT * FROM companies";
+                $result = mysqli_query($connect, $sql);
+
+                if (mysqli_num_rows($result) > 0) {
+                while($companies = mysqli_fetch_assoc($result)) {
+                    $company = $companies['name'] ?>
+                <option><?php echo $company; ?></option>
+                <?php } } ?> 
+                </select>
+                </div>
+
+              <div class="card" style="width: 18rem;">
+                <span class="img-div">
+                <div class="text-center img-placeholder"  onClick="triggerClick()">
+                    <h4>Upload image</h4>
+                </div>
+                <img src="applicants/avatar.jpg" onClick="triggerClick()" class="card-img-top" alt=""  id="imageUpdate">
+                </span>
+                <input type="file" name="image" onChange="updatedImage(this)" id="image" class="form-control" style="display: none;">
+                <label>Upload Image</label>
+                </div>
             <button id="submit" class="btn-block btn btn-success" type="submit" name="submit">Submit</button>
         </form>
         </div>
@@ -138,7 +203,11 @@ if( !$_SESSION['email'] ){
     </main>
 
     <?php 
-    
+      
+      $error = ('');
+      $msg = "";
+      $msg_class = "";
+            
     if( isset( $_POST['submit'] ) ){
         $name = $_POST['name'];
         $email = $_POST['email'];
@@ -148,28 +217,83 @@ if( !$_SESSION['email'] ){
         $levelRadios= $_POST['levelRadios'];
         $region= $_POST['region'];
         $district= $_POST['district'];
+        $paymentRadios = $_POST['paymentRadios'];
+        $job_title = $_POST['job_title'];
+        $statusRadios= $_POST['statusRadios'];
+        $company = $_POST['company'];
         $user_id = $user_id;
         // Get image name
-        $image = $_FILES['image']['name'];
-        // image file directory
-  	    $target = "applicants/".basename($image);
+        // imgage preview upload
+            $image = $_FILES['image']['name'];
+            // For image upload
+            $target = "applicants/".basename($image);
+            // VALIDATION
+            $info = getimagesize($_FILES["image"]["tmp_name"]);
+            $extension = pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION);
 
+            $width = $info[0];
+            $height = $info[1];
 
-        $sql = "INSERT INTO applicants (name, email, age, phone, industry, levelRadios, region, district, user_id, image) VALUES ( '$name', '$email', '$age', '$phone', '$industry', '$levelRadios', '$region', '$district', '$user_id', '$image' )";
+            $allowed_extension = array( "png", "jpg", "jpeg" );
 
-        if (move_uploaded_file($_FILES['image']['tmp_name'], $target) && mysqli_query($connect, $sql)) {
-          header('Location: applicants.php');
-        } else {
-            echo "Error: " . $sql . "<br>" . mysqli_error($connect);
-        }
-    }
+            // validate image size. Size is calculated in Bytes
+            if($_FILES['image']['size'] > 300000) {
+                $error = 'file size big';
+              $msg = "Image size should not be greater than 300Kb";
+              $msg_class = "alert-danger";
+            //   return false;
+            }
+            
+            if($width > 720 || $height > 720) { 
+                $error = 'w & h';              
+                $msg = "Image width and height should 720 Pixels";
+                $msg_class = "alert-danger";
+               
+            }
 
-    ?>
+            
+            if (! in_array($extension, $allowed_extension)) {  
+                $error ='unsupported extension';
+                $msg = "Image should be jpg, png or jpeg";
+                $msg_class = "alert-danger";
+                // return false;
+             }
+
+            // check if file exists
+            if(file_exists($target)) {
+              $error = 'file exists';
+              $msg = "File already exists";
+              $msg_class = "alert-danger";
+            }
+
+            if (empty($error)) {
+                if(move_uploaded_file($_FILES["image"]["tmp_name"], $target)) {
+                    $sql = "INSERT INTO applicants (name, email, age, phone, industry, levelRadios, region, district, paymentRadios, job_title, statusRadios, company, user_id, image) 
+                    VALUES ( '$name', '$email', '$age', '$phone', '$industry', '$levelRadios', '$region', '$district', '$paymentRadios', '$job_title', '$statusRadios', $company, '$user_id', '$image' )";
+                    if(mysqli_query($connect, $sql)){
+                        header( 'Location: applicants.php' );
+                  } else {
+                    $msg = "Error: " . $sql . "<br>" . mysqli_error($connect);
+                    $msg_class = "alert-danger";
+                  }
+                } else {
+                  $msg = "There was an error uploading the file";
+                  $msg = "alert-danger";
+                }
+              }
+            }
+            ?>
+
+        <?php if (!empty($msg)): ?>
+        <div class="alert <?php echo $msg_class ?>" role="alert">
+        <?php echo $msg; ?>
+        </div>
+        <?php endif; ?>
 
 
 <?php require 'footer.php'; ?>
     <!-- Optional JavaScript; choose one of the two! -->
-
+    <script src="./script.js"></script>
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
     <script src="./js/jquery-3.3.1.slim.min.js"></script>
     <script src="./js/bootstrap.bundle.min.js"></script>

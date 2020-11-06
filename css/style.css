@@ -68,6 +68,42 @@ footer .nav-link{
     color: white !important;
 }
 
+.details{
+  width: 70%; 
+  height: 70%;
+  margin: auto;
+}
+
+.all{
+    width: 30%; 
+    height: 30%;
+    margin: auto; 
+}
+
+#imageUpdate { display: block; height: 300px; width: 100%; margin: 0px auto; border-radius: 50%; }
+
+.img-placeholder {
+  color: white;
+  height: 300px; width: 100%;
+  background: black;
+  opacity: .7;
+  border-radius: 50%;
+  z-index: 2;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
+}
+
+.img-placeholder h4 {
+  margin-top: 40%;
+  color: white;
+}
+.img-div:hover .img-placeholder {
+  display: block;
+  cursor: pointer;
+}
+
 
 
 @media(max-width:500px){

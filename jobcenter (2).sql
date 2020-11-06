@@ -48,6 +48,15 @@ CREATE TABLE `companies` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
   )  
 
+
+ALTER TABLE `applicants` ADD `payment` varchar(100) NOT NULL  AFTER `district`;
+
+ALTER TABLE `applicants` ADD `job_title` varchar(100) NOT NULL  AFTER `payment`;
+
+ALTER TABLE `applicants` ADD `statusRadios` varchar(100) NOT NULL  AFTER `job_title`;
+
+ALTER TABLE `applicants` ADD `company` varchar(100) NOT NULL  AFTER `statusRadios`;
+
 ALTER TABLE `jobs` ADD `company` varchar(255) NOT NULL  AFTER `title`;
 users
 name

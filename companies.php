@@ -41,17 +41,17 @@ if (mysqli_num_rows($result) > 0) {
     while ($company = mysqli_fetch_assoc($result)) {
   ?>
   <div class="col-12 col-sm-4 mb-5">
-<div class="card" style="width: 18rem;">
+<div class="card">
 <div class="card-header text-center"><?php echo $company['name']; ?></div>
-  <img src="companies/<?php echo $company['image']; ?>" class="card-img-top" alt="<?php echo $company['name']; ?>">
+  <img  src="companies/<?php echo $company['image']; ?>" class="card-img-top" alt="<?php echo $company['name']; ?>">
   <div class="card-body">
     <h5 class="card-title text-center"><?php echo $company['name']; ?></h5>
     <p class="card-text text-center"><?php echo $company['email']; ?></p>
   </div>
   <div class="card-footer">
-    <a href="company_details.php?id=<?php echo $company['id']; ?>" class="btn btn-primary btn-sm">Details</a>
-    <a href="company_edit.php?id=<?php echo $company['id']; ?>" class="btn btn-info btn-sm">Update</a>
-    <a href="company_delete.php?id=<?php echo $company['id']; ?>" class="btn btn-danger btn-sm">Delete</a>
+    <span><a href="company_details.php?id=<?php echo $company['id']; ?>" class="btn btn-primary btn-sm">Details</a></span>
+    <span><a href="company_edit.php?id=<?php echo $company['id']; ?>" class="btn btn-info btn-sm">Update</a></span>
+    <span><a href="company_delete.php?id=<?php echo $company['id']; ?>" class="btn btn-danger btn-sm">Delete</a></span>    
   </div>
   </div>
   </div>

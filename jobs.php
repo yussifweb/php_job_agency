@@ -40,8 +40,8 @@ if( !$_SESSION['email'] ){
     
     while ($job = mysqli_fetch_assoc($result)) {
     ?>
-    <div class="col-12 col-sm-4">
-  <div class="card" style="width: 18rem;">
+   <div class="col-12 col-sm-4 pt-5">
+  <div class="card">
   <div class="card-header text-center"><?php echo $job['title']; ?></div>
   <img src="jobs/<?php echo $job['image']; ?>" class="card-img-top" alt="<?php echo $job['title']; ?>">
     <div class="card-body">
@@ -49,9 +49,9 @@ if( !$_SESSION['email'] ){
       <p class="card-text text-center"><?php echo $job['location']; ?></p>
     </div>
     <div class="card-footer">
-      <a href="job_details.php?id=<?php echo $job['id']; ?>" class="btn btn-primary btn-sm">Details</a>
-      <a href="job_edit.php?id=<?php echo $job['id']; ?>" class="btn btn-info btn-sm">Update</a>
-      <a href="job_delete.php?id=<?php echo $job['id']; ?>" class="btn btn-danger btn-sm">Delete</a>
+      <span><a href="job_details.php?id=<?php echo $job['id']; ?>" class="btn btn-primary btn-sm">Details</a></span>
+      <span><a href="job_edit.php?id=<?php echo $job['id']; ?>" class="btn btn-info btn-sm">Update</a></span>
+      <span><a href="job_delete.php?id=<?php echo $job['id']; ?>" class="btn btn-danger btn-sm">Delete</a></span>      
     </div>
     </div>
     </div>

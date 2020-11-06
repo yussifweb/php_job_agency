@@ -54,7 +54,7 @@ if( !$_SESSION['email'] ){
                 </div>
 
                 <div class="form-group">
-                  <label for="industry">Preferred Industry</label>
+                  <label for="industry">Industry</label>
                   <select class="form-control" name="industry" id="dropdown">
                       <option selected>Select</option>
                       <option>Agriculture</option>
@@ -105,9 +105,16 @@ if( !$_SESSION['email'] ){
              } }
             ?> 
 
-          <div class="form-group">
-              <input type="file" class="form-control input-sm" name="image" required placeholder="Upload Image">
-          </div>
+            <div class="card" style="width: 18rem;">
+                <span class="img-div">
+                <div class="text-center img-placeholder"  onClick="triggerClick()">
+                    <h4>Upload image</h4>
+                </div>
+                <img src="companies/avatar.jpg" onClick="triggerClick()" class="card-img-top" alt=""  id="imageUpdate">
+                </span>
+                <input type="file" name="image" onChange="updatedImage(this)" id="image" class="form-control" style="display: none;">
+                <label>Upload Image</label>
+                </div>
             <button id="submit" class="btn-block btn btn-success" type="submit" name="submit">Submit</button>
         </form>
         </div>
@@ -127,23 +134,78 @@ if( !$_SESSION['email'] ){
         $district= $_POST['district'];
         $user_id = $user_id;
         // Get image name
+        // imgage preview upload
         $image = $_FILES['image']['name'];
-        // image file directory
-  	    $target = "companies/".basename($image);
+        // For image upload
+        $target = "companies/".basename($image);
+        // VALIDATION
+        $info = getimagesize($_FILES["image"]["tmp_name"]);
+        $extension = pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION);
 
-        $sql = "INSERT INTO companies ( name, email, address, phone, industry, region, district, user_id, image) VALUES ( '$name', '$email', '$address', '$phone', '$industry', '$region', '$district', '$user_id', '$image' )";
+        $width = $info[0];
+        $height = $info[1];
 
-        if (move_uploaded_file($_FILES['image']['tmp_name'], $target) && mysqli_query($connect, $sql)) {
-            header('Location: companies.php');
-        } else {
-            echo "Error: " . $sql . "<br>" . mysqli_error($connect);
+        $allowed_extension = array( "png", "jpg", "jpeg" );
+
+        // validate image size. Size is calculated in Bytes
+        if($_FILES['image']['size'] > 300000) {
+            $error = 'file size big';
+          $msg = "Image size should not be greater than 300Kb";
+          $msg_class = "alert-danger";
+        //   return false;
         }
-    }
-    ?>
+        
+        if($width > 720 || $height > 720) { 
+            $error = 'w & h';              
+            $msg = "Image width and height should 720 Pixels";
+            $msg_class = "alert-danger";
+           
+        }
 
-     <?php require 'footer.php'; ?>
+        
+        if (! in_array($extension, $allowed_extension)) {  
+            $error ='unsupported extension';
+            $msg = "Image should be jpg, png or jpeg";
+            $msg_class = "alert-danger";
+            // return false;
+         }
+
+        // check if file exists
+        if(file_exists($target)) {
+          $error = 'file exists';
+          $msg = "File already exists";
+          $msg_class = "alert-danger";
+        }
+
+        if (empty($error)) {
+            if(move_uploaded_file($_FILES["image"]["tmp_name"], $target)) {
+              $sql = "INSERT INTO companies ( name, email, address, phone, industry, region, district, user_id, image) VALUES 
+              ( '$name', '$email', '$address', '$phone', '$industry', '$region', '$district', '$user_id', '$image' )";
+                      if(mysqli_query($connect, $sql)){
+                        header('Location: companies.php');
+              } else {
+                $msg = "Error: " . $sql . "<br>" . mysqli_error($connect);
+                $msg_class = "alert-danger";
+              }
+            } else {
+              $msg = "There was an error uploading the file";
+              $msg = "alert-danger";
+            }
+          }
+        }
+        ?>
+
+    <?php if (!empty($msg)): ?>
+    <div class="alert <?php echo $msg_class ?>" role="alert">
+    <?php echo $msg; ?>
+    </div>
+    <?php endif; ?>
+
+
+<?php require 'footer.php'; ?>
 
     <!-- Optional JavaScript; choose one of the two! -->
+    <script src="./script.js"></script>
 
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
     <script src="./js/jquery-3.3.1.slim.min.js"></script>

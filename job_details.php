@@ -49,8 +49,7 @@ if( !$_SESSION['email'] ){
                 </div>
             </div>
             <div class="col-12 col-sm-9">
-                <div class="card">
-                    
+                <div class="card">                    
                     <?php 
                         
                         $id = $_GET['id'];
@@ -60,7 +59,7 @@ if( !$_SESSION['email'] ){
                         if (mysqli_num_rows($result) > 0) {
                             while($job = mysqli_fetch_assoc($result)) { ?>
                             <div class="card-header text-center"><?php echo $job['title']; ?></div>
-                        <img src="jobs/<?php echo $job['image']; ?>" alt="">
+                        <img class="details" src="jobs/<?php echo $job['image']; ?>" alt="<?php echo $job['title']; ?>">
 
                     <div class="card-body">
                         <p class="text-center"><strong>Title: </strong> <?php echo $job['title']; ?>

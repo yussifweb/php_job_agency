@@ -58,7 +58,7 @@ if( !$_SESSION['email'] ){
 
                         if (mysqli_num_rows($result) > 0) {
                             while($company = mysqli_fetch_assoc($result)) { ?>
-                        <img src="companies/<?php echo $company['image']; ?>" alt="">
+                        <img class="details" src="companies/<?php echo $company['image']; ?>" alt="<?php echo $company['name']; ?>">
 
                     <div class="card-body">
                         <p class="text-center"><strong>Name: </strong> <?php echo $company['name']; ?>

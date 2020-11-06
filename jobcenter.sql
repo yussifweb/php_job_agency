@@ -31,6 +31,21 @@ CREATE TABLE `companies`
                    `image` VARCHAR(256) NOT NULL ,
                        PRIMARY KEY  (`id`))  
 
+
+                       function isimage(){
+$type=$_FILES['my-image']['type'];     
+
+$extensions=array('image/jpg','image/jpe','image/jpeg','image/jfif','image/png','image/bmp','image/dib','image/gif');
+    if(in_array($type, $extensions)){
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+
+                    
+
 Client
 name
 email

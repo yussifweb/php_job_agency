@@ -60,7 +60,7 @@ if( !$_SESSION['email'] ){
                         if (mysqli_num_rows($result) > 0) {
                             while($applicant = mysqli_fetch_assoc($result)) { ?>
                             <div class="card-header text-center"><?php echo $applicant['name']; ?></div>
-                        <img src="applicants/<?php echo $applicant['image']; ?>" alt="">
+                        <img class="details" src="applicants/<?php echo $applicant['image']; ?>" alt="<?php echo $applicant['name']; ?>">
 
                     <div class="card-body">
                         <p class="text-center"><strong>Name: </strong> <?php echo $applicant['name']; ?>
@@ -71,6 +71,8 @@ if( !$_SESSION['email'] ){
                         <span class="mr-5"></span><strong>Industry: </strong><?php echo $applicant['industry']; ?></p>
                         <p class="text-center"><strong>Region: </strong><?php echo $applicant['region']; ?>
                         <span class="mr-5"></span><strong>District: </strong><?php echo $applicant['district']; ?></p>
+                        <p class="text-center"><strong>Status: </strong><?php echo $applicant['statusRadios']; ?>
+                        <span class="mr-5"></span><strong>Company: </strong><?php echo $applicant['company']; ?></p>
                         <?php 
                         $user_name = $applicant['user_id'];
                         $sql = "SELECT * FROM users WHERE id='$user_name'";

@@ -98,9 +98,17 @@ if( !$_SESSION['email'] ){
               </select>
           </div>
 
-          <div class="form-group">
-              <input type="file" class="form-control input-sm" name="image" required placeholder="Upload Image">
-          </div>
+          <div class="card" style="width: 18rem;">
+                <span class="img-div">
+                <div class="text-center img-placeholder"  onClick="triggerClick()">
+                    <h4>Update image</h4>
+                </div>
+                <img src="companies/<?php echo $company['image']; ?>" onClick="triggerClick()" class="card-img-top" alt="<?php echo $company['name']; ?>"  id="imageUpdate">
+                </span>
+                <input type="file" name="image"  onChange="updatedImage(this)" id="image" class="form-control" style="display: none;">
+                <label>Update Image</label>
+                </div>
+
             <button id="submit" class="btn-block btn btn-success" type="submit" name="update">Submit</button>
              <?php }
                } else {
@@ -128,24 +136,96 @@ if( !$_SESSION['email'] ){
         $region= $_POST['region'];
         $district= $_POST['district'];
         // Get image name
-        $image = $_FILES['image']['name'];
-        // image file directory
-  	    $target = "companies/".basename($image);
+        // imgage preview upload
+            $image = $_FILES['image']['name'];
+            $tmp_dir = 'companies/';
 
-        $sql = "UPDATE companies SET name='$name', email='$email', address='$address', phone='$phone', industry='$industry', region='$region', district='$district', image='$image'  WHERE id='$id'";
+        if($image){            
+            // For image upload
+            $target = "companies/".basename($image);
+            // VALIDATION
 
-        if (move_uploaded_file($_FILES['image']['tmp_name'], $target) && mysqli_query($connect, $sql)) {
-            header('Location: companies.php');
-        } else {
-            echo "Error: " . $sql . "<br>" . mysqli_error($connect);
+            
+            $extension = pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION);
+
+            $info = getimagesize($_FILES["image"]["tmp_name"]);
+            $width = $info[0];
+            $height = $info[1];
+
+            $allowed_extension = array( "png", "jpg", "jpeg" );
+
+            // validate image size. Size is calculated in Bytes
+            if($_FILES['image']['size'] > 300000) {
+                $error = 'file size big';
+              $msg = "Image size should not be greater than 300Kb";
+              $msg_class = "alert-danger";
+            }
+
+            if( $width > 720 || $height > 720) { 
+                $error = 'w & h';              
+                $msg = "Image width and height should be 720 Pixels";
+                $msg_class = "alert-danger"; 
+              }
+
+            if (! in_array($extension, $allowed_extension)) {  
+                $error ='unsupported extension';
+                $msg = "Image should be jpg, png or jpeg";
+                $msg_class = "alert-danger";
+             }
+
+            // check if file exists
+            if(file_exists($target)) {
+              $msg = "File already exists";
+              $msg_class = "alert-danger";
+            }
+            
+            if (empty($error)){
+                $id = $_GET['id'];
+                $sql = "SELECT * FROM companies WHERE id='$id'";
+                $result = mysqli_query($connect, $sql);
+    
+                if (mysqli_num_rows($result) > 0) {
+                while($company = mysqli_fetch_assoc($result)) {
+               unlink($tmp_dir.$company['image']); // delete old image from database
+                }}                
+                move_uploaded_file($_FILES['image']['tmp_name'], $target);    
+            }
+            } else {
+                $id = $_GET['id'];
+                $sql = "SELECT * FROM companies WHERE id='$id'";
+                $result = mysqli_query($connect, $sql);
+    
+                if (mysqli_num_rows($result) > 0) {
+                while($company = mysqli_fetch_assoc($result)) {
+            // if no image selected the old image remain as it is.
+                $image = $company['image']; // old image from database
+                }}
+            };
+
+            if (empty($error)) {
+                $sql = "UPDATE companies SET name='$name', email='$email', address='$address', phone='$phone', industry='$industry', region='$region', district='$district', image='$image'  WHERE id='$id'";
+            if(mysqli_query($connect, $sql)){
+               header( 'Location: companies.php' );
+            } else {
+                $msg = "Error: " . $sql . "<br>" . mysqli_error($connect);
+                $msg_class = "alert-danger";
+            } 
+            }
         }
-    }
-
     ?>
+
+        <?php if (!empty($msg)): ?>
+         <div class="alert <?php echo $msg_class ?>" role="alert">
+          <?php echo $msg; ?>
+          </div>
+          <?php endif; ?>
+
     
 <?php require 'footer.php'; ?>
 
     <!-- Optional JavaScript -->
+    <script src="./script.js"></script>
+
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="./js/jquery-3.3.1.slim.min.js"></script>
     <script src="./js/bootstrap.bundle.min.js"></script>
