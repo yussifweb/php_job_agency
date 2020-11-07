@@ -43,6 +43,7 @@ session_start();
                         </div> -->
                         <button class="btn btn-lg btn-primary btn-block" name="login" type="submit">Sign in</button>
                       </form>
+                      <p><a href="reset.php">Forgot your password?</a></p>
                 </div>
                 <div class="foot card-footer text-center">
                     <p class="text-muted">&copy; 2020. Jobcenter <br/> All Rights Reserved</p>
