@@ -54,6 +54,11 @@ if( !$_SESSION['email'] ){
                 </div>
 
                 <div class="form-group">
+                    <label for="industry" id="industry-label">Preferred Industry</label>
+                    <input type="industry" class="form-control" id="industry" name="industry" placeholder="Please Enter Your Preferred Industry" required>
+                </div>
+
+                <!-- <div class="form-group">
                   <label for="industry">Preferred Industry</label>
                   <select class="form-control" name="industry" id="dropdown">
                       <option selected>Select</option>
@@ -65,7 +70,7 @@ if( !$_SESSION['email'] ){
                       <option>Other</option>
                   </select>
               </div>
-
+ -->
               <div class="form-group">
                 <label for="skill-level">Skill Level</label>
                 <div class="form-check">
@@ -91,7 +96,12 @@ if( !$_SESSION['email'] ){
               </div>
               </div>
 
-                <div class="form-group">
+              <div class="form-group">
+                    <label for="region" id="region-label">Region</label>
+                    <input type="region" class="form-control" id="region" name="region" placeholder="Please Enter Your Region" required>
+                </div>
+
+                <!-- <div class="form-group">
                   <label for="region">Region</label>
                   <select class="form-control" id="dropdown" name="region">
                       <option selected>Select</option>
@@ -101,9 +111,15 @@ if( !$_SESSION['email'] ){
                       <option>Brong Ahafo</option>
                       <option>Eastern</option>
                   </select>
-              </div>
+              </div> -->
 
-            <div class="form-group">
+              <div class="form-group">
+                    <label for="district" id="district-label">District</label>
+                    <input type="district" class="form-control" id="district" name="district" placeholder="Please Enter Your District" required>
+                </div>
+
+
+            <!-- <div class="form-group">
               <label for="district">District</label>
               <select class="form-control" id="dropdown" name="district">
                   <option selected>Select</option>
@@ -113,7 +129,8 @@ if( !$_SESSION['email'] ){
                   <option>Nhyiaeso Municipal</option>
                   <option>Eastern</option>
               </select>
-          </div>
+          </div> -->
+
           <?php 
             $email = $_SESSION['email'];
             $sql = "SELECT * FROM users WHERE email='$email'";
@@ -234,7 +251,7 @@ if( !$_SESSION['email'] ){
             $width = $info[0];
             $height = $info[1];
 
-            $allowed_extension = array( "png", "jpg", "jpeg" );
+            $allowed_extension = array( "png", "PNG", "JPG", "jpg", "jpeg", "JPEG" );
 
             // validate image size. Size is calculated in Bytes
             if($_FILES['image']['size'] > 300000) {
@@ -254,7 +271,7 @@ if( !$_SESSION['email'] ){
             
             if (! in_array($extension, $allowed_extension)) {  
                 $error ='unsupported extension';
-                $msg = "Image should be jpg, png or jpeg";
+                $msg = "Image should be JPG, jpg, png, PNG, JPEG or jpeg";
                 $msg_class = "alert-danger";
                 // return false;
              }

@@ -71,10 +71,10 @@ if( !$_SESSION['email'] ){
                     <input type="tel" class="form-control" id="phone" min="10" name="phone" value="<?php echo $applicant['phone']; ?>" placeholder="Your Contact Here...">
                 </div>
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label for="industry">Preferred Industry</label>
                   <select class="form-control" name="industry" id="dropdown">
-                      <option selected><?php echo $applicant['industry']; ?></option>
+                      <option selected></option>
                       <option>Agriculture</option>
                       <option>Information Technology</option>
                       <option>Bussiness</option>
@@ -82,7 +82,12 @@ if( !$_SESSION['email'] ){
                       <option>Food</option>
                       <option>Other</option>
                   </select>
-              </div>
+              </div> -->
+              <div class="form-group">
+                    <label for="industry" id="industry-label">Preferred Industry</label>
+                    <input type="industry" class="form-control" id="industry" name="industry" value="<?php echo $applicant['industry']; ?>" required>
+                </div>
+
               <div class="form-group">
                 <label for="skill-level">Skill Level</label>
                 <div class="form-check">
@@ -108,9 +113,9 @@ if( !$_SESSION['email'] ){
               </div>
               </div>
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label for="region">Region</label>
-                  <select class="form-control" id="dropdown" name="region" value="<?php echo $applicant['region']; ?>">
+                  <select class="form-control" id="dropdown" name="region" >
                       <option selected>Select</option>
                       <option>Ashanti</option>
                       <option>Greater Accra</option>
@@ -118,11 +123,17 @@ if( !$_SESSION['email'] ){
                       <option>Brong Ahafo</option>
                       <option>Eastern</option>
                   </select>
-              </div>
+              </div> -->
 
-            <div class="form-group">
+              <div class="form-group">
+                    <label for="region" id="region-label">Region</label>
+                    <input type="region" class="form-control" id="region" name="region" value="<?php echo $applicant['region']; ?>" required>
+                </div>
+
+
+            <!-- <div class="form-group">
               <label for="district">District</label>
-              <select class="form-control" id="dropdown" name="district" value="<?php echo $applicant['district']; ?>">
+              <select class="form-control" id="dropdown" name="district" >
                   <option selected>Select</option>
                   <option>Adum Municipal</option>
                   <option>Bekwai Municipal</option>
@@ -130,7 +141,13 @@ if( !$_SESSION['email'] ){
                   <option>Nhyiaeso Municipal</option>
                   <option>Eastern</option>
               </select>
-          </div>
+          </div> -->
+
+          <div class="form-group">
+                    <label for="district" id="district-label">District</label>
+                    <input type="district" class="form-control" id="district" name="district" value="<?php echo $applicant['district']; ?>" required>
+        </div>
+
 
           <div class="form-group">
                 <label for="payment-level">Payment</label>
@@ -250,7 +267,7 @@ if( !$_SESSION['email'] ){
             $width = $info[0];
             $height = $info[1];
 
-            $allowed_extension = array( "png", "jpg", "jpeg" );
+            $allowed_extension = array( "png", "PNG", "JPG", "jpg", "jpeg", "JPEG" );
 
             // validate image size. Size is calculated in Bytes
             if($_FILES['image']['size'] > 300000) {
@@ -267,7 +284,7 @@ if( !$_SESSION['email'] ){
 
             if (! in_array($extension, $allowed_extension)) {  
                 $error ='unsupported extension';
-                $msg = "Image should be jpg, png or jpeg";
+                $msg = "Image should be JPG, jpg, png, PNG, JPEG or jpeg";
                 $msg_class = "alert-danger";
              }
 
