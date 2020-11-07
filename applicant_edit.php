@@ -334,7 +334,7 @@ if( !$_SESSION['email'] ){
             ?>
 
          <?php if (!empty($msg)): ?>
-         <div class="alert <?php echo $msg_class ?>" role="alert">
+         <div class="alert mt-5 <?php echo $msg_class ?>" role="alert">
           <?php echo $msg; ?>
           </div>
           <?php endif; ?>
@@ -343,7 +343,7 @@ if( !$_SESSION['email'] ){
     <?php require 'footer.php'; ?>
 
     <!-- Optional JavaScript -->
-    <script src="./script.js"></script>
+    <script src="./js/script.js"></script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="./js/jquery-3.3.1.slim.min.js"></script>
     <script src="./js/bootstrap.bundle.min.js"></script>

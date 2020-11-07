@@ -139,56 +139,63 @@ if( !$_SESSION['email'] ){
     <?php 
     
     if( isset( $_POST['submit'] ) ){
-        $name = $_POST['name'];
-        $email = $_POST['email'];
-        $address= $_POST['address'];
-        $phone= $_POST['phone'];
-        $industry= $_POST['industry'];
-        $region= $_POST['region'];
-        $district= $_POST['district'];
-        $user_id = $user_id;
-        // Get image name
-        // imgage preview upload
-        $image = $_FILES['image']['name'];
-        // For image upload
-        $target = "companies/".basename($image);
-        // VALIDATION
-        $info = getimagesize($_FILES["image"]["tmp_name"]);
-        $extension = pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION);
-
-        $width = $info[0];
-        $height = $info[1];
-
-        $allowed_extension = array( "png", "PNG", "JPG", "jpg", "jpeg", "JPEG" );
-
-        // validate image size. Size is calculated in Bytes
-        if($_FILES['image']['size'] > 300000) {
-            $error = 'file size big';
-          $msg = "Image size should not be greater than 300Kb";
-          $msg_class = "alert-danger";
-        //   return false;
-        }
-        
-        if($width > 720 || $height > 720) { 
-            $error = 'w & h';              
-            $msg = "Image width and height should 720 Pixels";
+      $image = $_FILES['image']['name'];
+        if (empty($image)) {
+            $error = 'no image';
+            $msg = "Please upload an image";
             $msg_class = "alert-danger";
-           
-        }
-
-        
-        if (! in_array($extension, $allowed_extension)) {  
-            $error ='unsupported extension';
-            $msg = "Image should be JPG, jpg, png, PNG, JPEG or jpeg";
+        }else {
+          $name = $_POST['name'];
+          $email = $_POST['email'];
+          $address= $_POST['address'];
+          $phone= $_POST['phone'];
+          $industry= $_POST['industry'];
+          $region= $_POST['region'];
+          $district= $_POST['district'];
+          $user_id = $user_id;
+          // Get image name
+          // imgage preview upload
+          $image = $_FILES['image']['name'];
+          // For image upload
+          $target = "companies/".basename($image);
+          // VALIDATION
+          $info = getimagesize($_FILES["image"]["tmp_name"]);
+          $extension = pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION);
+  
+          $width = $info[0];
+          $height = $info[1];
+  
+          $allowed_extension = array( "png", "PNG", "JPG", "jpg", "jpeg", "JPEG" );
+  
+          // validate image size. Size is calculated in Bytes
+          if($_FILES['image']['size'] > 300000) {
+              $error = 'file size big';
+            $msg = "Image size should not be greater than 300Kb";
             $msg_class = "alert-danger";
-            // return false;
-         }
-
-        // check if file exists
-        if(file_exists($target)) {
-          $error = 'file exists';
-          $msg = "File already exists";
-          $msg_class = "alert-danger";
+          //   return false;
+          }
+          
+          if($width > 720 || $height > 720) { 
+              $error = 'w & h';              
+              $msg = "Image width and height should 720 Pixels";
+              $msg_class = "alert-danger";
+             
+          }
+  
+          
+          if (! in_array($extension, $allowed_extension)) {  
+              $error ='unsupported extension';
+              $msg = "Image should be JPG, jpg, png, PNG, JPEG or jpeg";
+              $msg_class = "alert-danger";
+              // return false;
+           }
+  
+          // check if file exists
+          if(file_exists($target)) {
+            $error = 'file exists';
+            $msg = "File already exists";
+            $msg_class = "alert-danger";
+          }  
         }
 
         if (empty($error)) {
@@ -210,7 +217,7 @@ if( !$_SESSION['email'] ){
         ?>
 
     <?php if (!empty($msg)): ?>
-    <div class="alert <?php echo $msg_class ?>" role="alert">
+    <div class="alert mt-5 <?php echo $msg_class ?>" role="alert">
     <?php echo $msg; ?>
     </div>
     <?php endif; ?>
@@ -219,7 +226,7 @@ if( !$_SESSION['email'] ){
 <?php require 'footer.php'; ?>
 
     <!-- Optional JavaScript; choose one of the two! -->
-    <script src="./script.js"></script>
+    <script src="./js/script.js"></script>
 
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
     <script src="./js/jquery-3.3.1.slim.min.js"></script>

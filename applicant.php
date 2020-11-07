@@ -225,68 +225,76 @@ if( !$_SESSION['email'] ){
       $msg = "";
       $msg_class = "";
             
-    if( isset( $_POST['submit'] ) ){
-        $name = $_POST['name'];
-        $email = $_POST['email'];
-        $age= $_POST['age'];
-        $phone= $_POST['phone'];
-        $industry= $_POST['industry'];
-        $levelRadios= $_POST['levelRadios'];
-        $region= $_POST['region'];
-        $district= $_POST['district'];
-        $paymentRadios = $_POST['paymentRadios'];
-        $job_title = $_POST['job_title'];
-        $statusRadios= $_POST['statusRadios'];
-        $company = $_POST['company'];
-        $user_id = $user_id;
-        // Get image name
-        // imgage preview upload
-            $image = $_FILES['image']['name'];
-            // For image upload
-            $target = "applicants/".basename($image);
-            // VALIDATION
-            $info = getimagesize($_FILES["image"]["tmp_name"]);
-            $extension = pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION);
-
-            $width = $info[0];
-            $height = $info[1];
-
-            $allowed_extension = array( "png", "PNG", "JPG", "jpg", "jpeg", "JPEG" );
-
-            // validate image size. Size is calculated in Bytes
-            if($_FILES['image']['size'] > 300000) {
-                $error = 'file size big';
-              $msg = "Image size should not be greater than 300Kb";
-              $msg_class = "alert-danger";
-            //   return false;
-            }
-            
-            if($width > 720 || $height > 720) { 
-                $error = 'w & h';              
-                $msg = "Image width and height should 720 Pixels";
-                $msg_class = "alert-danger";
-               
-            }
-
-            
-            if (! in_array($extension, $allowed_extension)) {  
-                $error ='unsupported extension';
-                $msg = "Image should be JPG, jpg, png, PNG, JPEG or jpeg";
-                $msg_class = "alert-danger";
-                // return false;
-             }
-
-            // check if file exists
-            if(file_exists($target)) {
-              $error = 'file exists';
-              $msg = "File already exists";
-              $msg_class = "alert-danger";
-            }
+    if(isset( $_POST['submit'])){
+        $image = $_FILES['image']['name'];
+        if (empty($image)) {
+            $error = 'no image';
+            $msg = "Please upload an image";
+            $msg_class = "alert-danger";
+        }
+        else{
+            $name = $_POST['name'];
+            $email = $_POST['email'];
+            $age= $_POST['age'];
+            $phone= $_POST['phone'];
+            $industry= $_POST['industry'];
+            $levelRadios= $_POST['levelRadios'];
+            $region= $_POST['region'];
+            $district= $_POST['district'];
+            $paymentRadios = $_POST['paymentRadios'];
+            $job_title = $_POST['job_title'];
+            $statusRadios= $_POST['statusRadios'];
+            $company = $_POST['company'];
+            $user_id = $user_id;
+            // Get image name
+            // imgage preview upload
+                // $image = $_FILES['image']['name'];
+                // For image upload
+                $target = "applicants/".basename($image);
+                // VALIDATION
+                $info = getimagesize($_FILES["image"]["tmp_name"]);
+                $extension = pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION);
+    
+                $width = $info[0];
+                $height = $info[1];
+    
+                $allowed_extension = array( "png", "PNG", "JPG", "jpg", "jpeg", "JPEG" );
+    
+                // validate image size. Size is calculated in Bytes
+                if($_FILES['image']['size'] > 300000) {
+                  $error = 'file size big';
+                  $msg = "Image size should not be greater than 300Kb";
+                  $msg_class = "alert-danger";
+                //   return false;
+                }
+                
+                if($width > 720 || $height > 720) { 
+                    $error = 'w & h';              
+                    $msg = "Image width and height should 720 Pixels";
+                    $msg_class = "alert-danger";
+                   
+                }
+    
+                
+                if (! in_array($extension, $allowed_extension)) {  
+                    $error ='unsupported extension';
+                    $msg = "Image should be JPG, jpg, png, PNG, JPEG or jpeg";
+                    $msg_class = "alert-danger";
+                    // return false;
+                 }
+    
+                // check if file exists
+                if(file_exists($target)) {
+                  $error = 'file exists';
+                  $msg = "File already exists";
+                  $msg_class = "alert-danger";
+                }    
+              }
 
             if (empty($error)) {
                 if(move_uploaded_file($_FILES["image"]["tmp_name"], $target)) {
                     $sql = "INSERT INTO applicants (name, email, age, phone, industry, levelRadios, region, district, paymentRadios, job_title, statusRadios, company, user_id, image) 
-                    VALUES ( '$name', '$email', '$age', '$phone', '$industry', '$levelRadios', '$region', '$district', '$paymentRadios', '$job_title', '$statusRadios', $company, '$user_id', '$image' )";
+                    VALUES ( '$name', '$email', '$age', '$phone', '$industry', '$levelRadios', '$region', '$district', '$paymentRadios', '$job_title', '$statusRadios', '$company', '$user_id', '$image' )";
                     if(mysqli_query($connect, $sql)){
                         header( 'Location: applicants.php' );
                   } else {
@@ -302,7 +310,7 @@ if( !$_SESSION['email'] ){
             ?>
 
         <?php if (!empty($msg)): ?>
-        <div class="alert <?php echo $msg_class ?>" role="alert">
+        <div class="alert mt-5 <?php echo $msg_class ?>" role="alert">
         <?php echo $msg; ?>
         </div>
         <?php endif; ?>
@@ -310,7 +318,7 @@ if( !$_SESSION['email'] ){
 
 <?php require 'footer.php'; ?>
     <!-- Optional JavaScript; choose one of the two! -->
-    <script src="./script.js"></script>
+    <script src="./js/script.js"></script>
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
     <script src="./js/jquery-3.3.1.slim.min.js"></script>
     <script src="./js/bootstrap.bundle.min.js"></script>
