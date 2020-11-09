@@ -82,7 +82,7 @@ session_start();
 
 
     <!-- Optional JavaScript; choose one of the two! -->
-
+    <script src="./js/font-awesome.js"></script>
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
     <script src="./jquery-3.3.1.slim.min.js"></script>
     <script src="./js/bootstrap.bundle.min.js"></script>

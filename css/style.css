@@ -15,7 +15,7 @@ body{
      font-size: 20px;
      font-style: italic;
  }
- 
+
  #main{
      /* background-color: #288671; */
      border-radius: 20px;
@@ -103,6 +103,31 @@ footer .nav-link{
   display: block;
   cursor: pointer;
 }
+
+#idImageUpdate { display: block; height: 100px; width: 75%; margin: 0px auto; border-radius: 1%; }
+
+.idImg-placeholder {
+  color: white;
+  height: 100px; width: 75%;
+  background: black;
+  opacity: .7;
+  border-radius: 1%;
+  z-index: 2;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
+}
+
+.idImg-placeholder h4 {
+  margin-top: 20%;
+  color: white;
+}
+.img-div:hover .idImg-placeholder {
+  display: block;
+  cursor: pointer;
+}
+
 
 
 

@@ -46,15 +46,9 @@ if( !$_SESSION['email'] ){
 
 
     <!-- Optional JavaScript; choose one of the two! -->
-
+    <script src="./js/font-awesome.js"></script>
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
     <script src="./js/jquery-3.3.1.slim.min.js"></script>
     <script src="./js/bootstrap.bundle.min.js"></script>
-
-    <!-- Option 2: jQuery, Popper.js, and Bootstrap JS
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
-    -->
   </body>
 </html>

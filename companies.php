@@ -72,6 +72,7 @@ if (mysqli_num_rows($result) > 0) {
 
 <?php require 'footer.php'; ?>
     <!-- Optional JavaScript -->
+    <script src="./js/font-awesome.js"></script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="./js/jquery-3.3.1.slim.min.js"></script>
     <script src="./js/bootstrap.bundle.min.js"></script>

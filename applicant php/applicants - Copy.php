@@ -42,12 +42,11 @@ if( !$_SESSION['email'] ){
     ?>
     <div class="col-12 col-sm-4 mb-5">
   <div class="card">
-  <div class="card-header text-center"><?php echo $applicant['f_name']; ?></div>
-  <img src="applicants/<?php echo $applicant['image']; ?>" class="card-img-top" alt="<?php echo $applicant['f_name']; ?>">
+  <div class="card-header text-center"><?php echo $applicant['name']; ?></div>
+  <img src="applicants/<?php echo $applicant['image']; ?>" class="card-img-top" alt="<?php echo $company['name']; ?>">
     <div class="card-body">
-      <h5 class="card-title text-center"><?php echo $applicant['f_name']; ?></h5>
+      <h5 class="card-title text-center"><?php echo $applicant['name']; ?></h5>
       <p class="card-text text-center"><?php echo $applicant['email']; ?></p>
-      <p class="card-text text-center"><?php echo $applicant['phone']; ?></p>
     </div>
     <div class="card-footer">
       <span><a href="applicant_details.php?id=<?php echo $applicant['id']; ?>" class="btn btn-primary btn-sm">Details</a></span>

@@ -32,6 +32,7 @@ if( !$_SESSION['email'] ){
     <div class="row mb-5">
     <div class="col-12 col-sm-10 offset-sm-1 mb-5">
     <div class="mt-5 pb-5">
+    <div class="head text-center h2">PENDING APPLICANTS</div>
     <?php
     $sql = "SELECT * FROM applicants WHERE statusRadios='Pending'";
     $result = mysqli_query( $connect, $sql );
@@ -72,7 +73,9 @@ if( !$_SESSION['email'] ){
 </table>
 </div>
 
+
 <div class="mt-5">
+<div class="head text-center h2">POSTED APPLICANTS</div>
 <?php
 $sql = "SELECT * FROM applicants WHERE statusRadios='Posted'";
 $result = mysqli_query( $connect, $sql );
@@ -121,7 +124,7 @@ $row=mysqli_fetch_array($result);
 mysqli_close($connect);
 ?>
 <div class="m-auto pt-5">
-    <button class="btn btn-success btn-lg text-center"><strong>TOTAL APPLICANTS IS <?php echo $row[0]; ?> </strong></button>
+    <button class="btn btn-secondary btn-lg text-center"><strong>TOTAL APPLICANT(S) IS <?php echo $row[0]; ?> </strong></button>
 </div>
 <!-- get number of applicants -->
   
@@ -138,6 +141,7 @@ mysqli_close($connect);
 <?php require 'footer.php'; ?>
     
     <!-- Optional JavaScript -->
+    <script src="./js/font-awesome.js"></script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="./js/jquery-3.3.1.slim.min.js"></script>
     <script src="./js/bootstrap.bundle.min.js"></script>
